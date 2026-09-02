@@ -10,5 +10,6 @@ public class newClass {
         System.out.println(prova);
     }
     //third comment
+    //bla bla bla
 
 }
