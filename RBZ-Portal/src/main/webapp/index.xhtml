@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<h:head>
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
+    <title> Portal - RBZ am Schuetzenpark</title>
+    <link href="css/portal.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+
+        .ui-datagrid-no-border .ui-datagrid-content {
+            border: none !important;
+            background-color: transparent !important;
+        }
+
+    </style>
+</h:head>
+
+<h:body class="body">
+    <div class="ui-fluid">
+        <div class="fullscreen">
+
+            <h:form>
+                <p:panelGrid columns="3" layout="grid" columnClasses="header-right,header-center, header-left"
+                             style="margin-bottom:30px" styleClass="ui-panelgrid-blank" rendered="true">
+                    <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                        <p:graphicImage id="rbzlogo" url="images/rbz_asp_logo_2018.png"
+                                        alt="RBZ-Logo" title="Hier geht es zur Webseite des RBZ am Schützenpark"
+                                        width="auto" height="50"/>
+                    </p:link>
+                    <p:row>
+                        <p:menubar>
+                            <p:menuitem value="REGISTRIERUNG" icon="pi pi-user-plus"
+                                        url="Anmeldung/regQuest.xhtml"
+                                        title="Registrierung per Schlüssel" rendered="true"/>
+
+                            <p:menuitem value="HILFE" url="#{Portal.helpLinkAll}" icon="pi pi-question" target="_blank"
+                                        rendered="true"/>
+                            <p:submenu label="DOWNLOAD" icon="pi pi-download" rendered="true">
+                                <p:menuitem value="Benutzerordnung" icon="pi pi-download" ajax="false"
+                                            title="Download der Benutzerordnung" url="downloads/Benutzerordnung.pdf"
+                                            target="_blank">
+                                </p:menuitem>
+                                <p:menuitem value="Nextcloud" url="https://nextcloud.com/de/install/" target="_blank"
+                                            rendered="true"/>
+                                <p:menuitem value="Only Office"
+                                            url="https://www.onlyoffice.com/de/download-desktop.aspx" target="_blank"
+                                            rendered="true"/>
+                            </p:submenu>
+                            <p:menuitem value="SUPPORT" url="https://ticket.rbz-sp.de" target="_blank"
+                                        rendered="true"/>
+                        </p:menubar>
+                    </p:row>
+                    <p:row>
+                        <p:commandButton value="LOGIN" icon="pi pi-sign-in" actionListener="#{Portal.Login()}"
+                                         style="width:150px" rendered="true"/>
+                        <div align="right">
+                            <p:link value="Passwort vergessen?"
+                                    href="Password/invoke_reset_via_mail.xhtml?faces-redirect=true"
+                                    style="width: 200px"/>
+                        </div>
+                    </p:row>
+                </p:panelGrid>
+
+                <h:panelGrid columns="1" rendered="true"
+                             style="width:100%; font-size: smaller; text-align:right; color: white;font-family: sans-serif">
+                    <h:outputText value="Fotografie: Bernd Perlbach sowie AX5 Architekten"/>
+                </h:panelGrid>
+                <!--panelGrid für Systemmeldungen-->
+                <h:panelGrid columns="1" rendered="#{SystemMessage.display=='true'}"
+                             style=" background-color: red; margin-top:20px; width:100%; text-align:center; font-size:x-large; color: white;font-family: sans-serif">
+                    <h:outputText value="#{SystemMessage.message}"/>
+                </h:panelGrid>
+                <!--Darstellung der Link Elemente-->
+                <p:dataGrid var="link" value="#{Portal.guestWebLinks}" emptyMessage='#{Portal.linkError}' columns="6"
+                            layout="grid" styleClass="ui-datagrid-no-border"
+                            style="margin-top:20px">
+
+                    <p:panel id="panel" header="#{link.name}" style="text-align:center; width: 100%">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:link href="#{link.url}" target="_blank">
+                                <p:graphicImage url="images/#{link.image}"
+                                                width="15%" height="15%"/>
+                            </p:link>
+                            <h:outputText value="#{link.desc}"/>
+                        </h:panelGrid>
+                        <p:tooltip id="tooltip" for="panel" value="#{link.tooltip}" position="top"/>
+                    </p:panel>
+                </p:dataGrid>
+
+                <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+                                        update="exceptionDialog"
+                                        onexception="PF('exceptionDialog').show();"/>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

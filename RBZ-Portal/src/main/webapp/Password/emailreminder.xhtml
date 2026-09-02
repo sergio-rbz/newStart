@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>RBZ am Schützenpark</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<h:body>
+
+
+    <p:panel styleClass="dialog" header="Email Bestätigung erforderlich" class="panel3">
+        <p:panelGrid columns="1" layout="grid" columnClasses="header-right, header-left" style="mardin-bootom:30px"
+                     styleClass="ui-panelgrid-blank">
+
+        </p:panelGrid>
+
+        <h:panelGrid columns="1" cellpadding="10" style="margin: auto">
+            <p:graphicImage id="Logo" url="../images/rbz_asp_logo_2018.png"
+                            alt="rbzlogo" title="RBZ_am_Schuetzenpark_Logo"
+                            width="Auto" height="Auto"/>
+        </h:panelGrid>
+
+        <h:panelGrid columns="2">
+            <p:graphicImage id="exclamation" url="../images/icons8_exclamation_mark_96px.png"
+                            alt="exclamation_mark" title="exclamatin_mark"
+                            width="Auto" height="Auto"/>
+            <h:outputText value="#{PasswordReset.messageForEmailReminder}" escape="false" style="font-size: large; "/>
+        </h:panelGrid>
+        <h:panelGrid columns="2" cellpadding="5" style="margin-top: 40px" class="navibuttonrow">
+            <p:button value="OK" href="../index.xhtml" style="width:180px"/>
+        </h:panelGrid>
+
+    </p:panel>
+
+
+</h:body>
+</html>

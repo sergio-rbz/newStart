@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>RBZ am Schützenpark</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<h:body class="body">
+    <div class="ui-fluid">
+        <div class="fullscreen">
+            <h:form id="form1">
+                <p:panelGrid columns="1" layout="grid" columnClasses="header-right, header-left"
+                             style="mardin-bottom:30px" styleClass="ui-panelgrid-blank">
+                    <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                        <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                        alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                        width="auto" height="50"/>
+                    </p:link>
+                </p:panelGrid>
+                <p:panel class="dialogReg" header="Bitte registrieren sie sich:">
+                    <h:panelGrid columns="1" class="panel">
+                        <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                                        alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                        width="Auto" height="Auto"/>
+                        <p:outputLabel value="Halten sie die Maus etwas länger über die Felder für Info."/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" class="panel">
+
+                        <p:outputLabel value="Schlüssel: "/>
+                        <p:inputText id="token" value="#{RegistrationView.key}" class="textfeldReg" required="true"
+                                     requiredMessage="Schlüssel wird benötigt" validator="#{ValidateView.tokenValidate}"
+                                     title="Den Schlüssel bekommen sie von ihrer Lehrkraft"/>
+                        <p:message for="token"/>
+
+                        <p:outputLabel value="Vorname: "/>
+                        <p:inputText id="vorname" value="#{RegistrationView.givenname}" class="textfeldReg"
+                                     required="true"
+                                     requiredMessage="Bitte Vorname eingeben" validator="#{ValidateView.namesValidate}"
+                                     title="Ihr Vorname?"/>
+                        <p:message for="vorname"/>
+
+                        <p:outputLabel value="Nachname: "/>
+                        <p:inputText id="nachname" value="#{RegistrationView.surname}" class="textfeldReg"
+                                     required="true" requiredMessage="Bitte Nachname eingeben"
+                                     validator="#{ValidateView.namesValidate}"
+                                     title="Ihr Nachname? Bitte keine Umlaute (Ä Ü Ö ß)"/>
+                        <p:message for="nachname"/>
+
+                        <p:outputLabel value="Geburtstag: "/>
+                        <p:inputMask id="birthday" value="#{RegistrationView.birthday}" mask="99.99.9999"
+                                     class="textfeldReg" required="true"
+                                     requiredMessage="Bitte Geburtsdatum eingeben"
+                                     validator="#{ValidateView.birthdayValidate}"
+                                     title="Ihr Geburtsdatum als tt.mm.jjjj"/>
+                        <p:message for="birthday"/>
+
+                        <p:outputLabel value="Geschlecht: "/>
+                        <p:selectOneMenu id="gender" value="#{RegistrationView.gender}" class="textfeldReg"
+                                         required="true" requiredMessage="Bitte Geschlecht auswählen"
+                                         title="Ihr Geschlecht?">
+                            <f:selectItem itemLabel="bitte wählen" itemValue=""/>
+                            <f:selectItem itemLabel="weiblich" itemValue="weiblich"/>
+                            <f:selectItem itemLabel="männlich" itemValue="männlich"/>
+                            <f:selectItem itemLabel="divers" itemValue="divers"/>
+                        </p:selectOneMenu>
+                        <p:message for="gender"/>
+
+                        <p:outputLabel value="Email Adresse: "/>
+                        <p:inputText id="email" class="textfeldReg" value="#{RegistrationView.email}" label="Email"
+                                     required="true" requiredMessage="Bitte Emailadresse eingeben"
+                                     title="Wie lautet ihre Emailadresse?">
+                            <f:event type="postValidate" listener="#{ValidateView.postValidateEmail}"/>
+                        </p:inputText>
+                        <p:message for="email"/>
+
+                        <p:outputLabel value="Email Adresse (Wiederholung): "/>
+                        <p:inputText id="emailcheck" class="textfeldReg" value="#{RegistrationView.emailCheck}"
+                                     label="EmailCheck" validator="#{ValidateView.EmailValidate}" required="true"
+                                     requiredMessage="Bitte Emailadresse eingeben"
+                                     title="Bitte geben sie ihre Emailadresse erneut ein.">
+
+                        </p:inputText>
+                        <p:message for="emailcheck"/>
+
+                        <p:outputLabel value="Benutzerordnung gelesen: "/>
+                        <p:selectBooleanCheckbox id="hasread" value="#{RegistrationView.hasRead}" style="width:60px"
+                                                 validator="#{ValidateView.yesValidate}"
+                                                 title="Haben sie die Benutzerordnung gelesen?"/>
+                        <p:message for="hasread"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" class="navibuttonrow">
+                        <p:button outcome="/index" value="Abbrechen" class="navibutton"/>
+                        <p:commandButton id="save" action="#{RegistrationView.registration}" value="Registrieren"
+                                         ajax="false" class="navibutton"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

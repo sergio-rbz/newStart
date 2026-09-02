@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Passwort setzen - RBZ am Schützenpark</title>
+    <link href="../resources/css/portal.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="../resources/images/favicon.png"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+    <f:metadata>
+        <f:viewParam name="uidNumber" value="#{Yamf.uidNumber}"/>
+    </f:metadata>
+</h:head>
+<body>
+<p:panel header="Ipad Ausgabe für Benutzer genehmigen?" class="dialog">
+    <h:form id="reset">
+        <p:messages id="info" showDetail="false" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+        <h:panelGrid columns="2" class="navibuttonrow">
+            <p:commandButton action="#{Yamf.add()}" ajax="false" value="ja" update="info" class="navibutton"/>
+            <p:linkButton outcome="classAdmin.xhtml" value="nein" class="navibutton"/>
+        </h:panelGrid>
+    </h:form>
+</p:panel>
+</body>
+</html>

@@ -1,0 +1,170 @@
+.body {
+}
+
+.fullscreen {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: auto;
+    height: 100vh;
+
+}
+
+
+@media (max-width: 1259px) {
+    .fullscreen {
+        background-image: url("../images/17081-RBZ-C-16.jpg");
+    }
+}
+
+@media (min-width: 1259px) {
+    .fullscreen {
+        background-image: url("../images/17081-RBZ-C-16.jpg");
+    }
+}
+
+
+.panel {
+     width: auto;
+     height: auto;
+     margin: auto;
+     margin-top: 20px;
+     background-color: transparent;
+     border-color: transparent;
+
+ }
+
+.panel2 {
+    width: auto;
+    height: auto;
+    margin: auto;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.panel3 {
+    width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+
+}
+
+.dialog {
+    margin: auto;
+    width: 550px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-color: rgba(255, 255, 255, 0.8)
+}
+
+.dialogReg {
+    margin: auto;
+    width: 60%;
+    height: 80%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-color: rgba(255, 255, 255, 0.8)
+}
+
+.dialog-max {
+    width: auto;
+    height: auto;
+    margin-top: 40px;
+}
+
+.textfeldReg {
+    width: 250px;
+}
+
+
+.dialogfloat {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8)
+}
+
+.dialoglogo {
+    margin: auto;
+    border: transparent;
+}
+
+.sbmenu {
+    margin-top: 100px;
+    padding-top: 20px;
+    background-color: rgba(255, 255, 255, 0.5)
+}
+
+.sbmenubutton {
+    margin: 10px;
+    width: 250px;
+    height: 40px;
+    text-align: left;
+}
+
+.sbpanelmenu {
+    margin: 10px;
+    width: 250px;
+    text-align: left;
+}
+
+.rbz-icon-burger {
+    background-color: transparent;
+    background-image: url("#{resource['../images/burger.png']}") !important;
+}
+
+.navibuttonrow {
+    text-align: center;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+
+}
+
+.navibutton {
+    width: 200px;
+}
+
+.Header {
+    margin: 10px;
+    width: 250px;
+    text-align: left;
+    font-size: 40px;
+}
+
+.exporters {
+    float: right;
+    padding-top: 0px;
+}
+
+.classlisttable {
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.header-right {
+    border: none;
+    background: transparent;
+    text-align: left;
+}
+
+.header-center {
+    border: none;
+    background: transparent;
+    text-align: center;
+}
+
+.header-left {
+    border: none;
+    background: transparent;
+    text-align: right;
+}
+
+.pitem {
+    border: none;
+    text-align: center;
+}
+
+
+
+

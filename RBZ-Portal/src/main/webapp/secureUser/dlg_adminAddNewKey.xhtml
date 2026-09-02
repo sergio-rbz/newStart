@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Neue Schlüssel für Klasse anlegen.</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<body>
+<p:panel header="Neue Schlüssel zuteilen." class="dialog-max">
+    <h:form>
+        <p:panelGrid columns="1" styleClass="ui-noborder" style="margin: auto">
+            <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                            alt="RBZ-LOGO" title="RBZ_am_Schuetzenpark_Logo"
+                            width="auto" height="100"/>
+        </p:panelGrid>
+        <p:messages id="msgs" closable="true" showDetail="false">
+            <p:autoUpdate/>
+        </p:messages>
+        <p:panelGrid columns="2" styleClass="ui-noborder" style="margin: auto; margin-top: 20px">
+            <p:outputLabel value="Bitte die Klasse auswählen:"/>
+            <p:selectOneMenu id="selectclassNewKey" value="#{ClassAdminView.className}" required="true"
+                             requiredMessage="Bitte Klasse wählen.">
+                <f:selectItem itemLabel=" " itemValue=""/>
+                <f:selectItems value="#{ClassAdminView.classes}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Anzahl Schlüssel: "/>
+            <p:selectOneMenu id="count" value="#{ClassAdminView.count}">
+                <f:selectItem itemLabel="2" itemValue="2"/>
+                <f:selectItem itemLabel="10 " itemValue="10"/>
+                <f:selectItem itemLabel="15 " itemValue="15"/>
+                <f:selectItem itemLabel="20 " itemValue="20"/>
+                <f:selectItem itemLabel="25 " itemValue="25"/>
+                <f:selectItem itemLabel="30" itemValue="30"/>
+                <f:selectItem itemLabel="35 " itemValue="35"/>
+            </p:selectOneMenu>
+        </p:panelGrid>
+        <h:panelGrid columns="2" class="navibuttonrow">
+            <p:button outcome="classAdmin.xhtml" value="zurück" class="navibutton"/>
+            <p:commandButton ajax="false" id="btnNewKey" value="Schlüssel erzeugen"
+                             actionListener="#{ClassAdminView.AddClassKeys()}" update="newuser"/>
+        </h:panelGrid>
+    </h:form>
+</p:panel>
+
+</body>
+</html>

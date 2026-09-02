@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Benutzer löschen? - RBZ am Schützenpark</title>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+    <f:metadata>
+        <f:viewParam name="userUidNumberToDelete" value="#{ClassAdminView.userUidNumberToDelete}"/>
+        <f:viewParam name="userFullNameToDelete" value="#{ClassAdminView.userFullNameToDelete}"/>
+        <f:viewParam name="userNameToDelete" value="#{ClassAdminView.userNameToDelete}"/>
+        <f:viewParam name="userClass" value="#{ClassAdminView.userNameToDeleteOU}"/>
+    </f:metadata>
+</h:head>
+<body>
+<p:panel header="Benutzer löschen?" class="dialog">
+    <p:panelGrid columns="1" styleClass="ui-noborder" style="margin: auto">
+        <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                        alt="RBZ-LOGO" title="RBZ_am_Schuetzenpark_Logo"
+                        width="auto" height="100"/>
+    </p:panelGrid>
+    <h:form id="delete">
+        <p:messages id="msgs" closable="true" showDetail="false">
+            <p:autoUpdate/>
+        </p:messages>
+        <div style="text-align: center">
+            <p:outputLabel
+                    value="Soll der Benutzer - #{ClassAdminView.userNameToDelete} (#{ClassAdminView.userFullNameToDelete}, #{ClassAdminView.userNameToDeleteOU}) - gelöscht werden?"/>
+        </div>
+        <h:panelGrid columns="2" class="navibuttonrow">
+            <p:commandButton action="#{ClassAdminView.UserDelete}" ajax="false" value="ja" class="navibutton"/>
+            <p:linkButton outcome="classAdmin.xhtml" value="nein" class="navibutton"/>
+        </h:panelGrid>
+
+
+
+    </h:form>
+</p:panel>
+</body>
+</html>

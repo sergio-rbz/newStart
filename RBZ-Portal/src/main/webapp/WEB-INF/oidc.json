@@ -1,0 +1,10 @@
+{
+  "realm": "master",
+  "client-id": "Portal",
+  "provider-url": "http://127.0.0.1:8090/auth/realms/master",
+  "ssl-required": "none",
+  "public-client": true,
+  "verify-token-audience": true,
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}

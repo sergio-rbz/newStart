@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>RBZ am Schützenpark</title>
+    <link href="../resources/css/portal.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+</h:head>
+<h:body>
+
+    <div class="fullscreen">
+        <p:panelGrid columns="1" layout="grid" columnClasses="header-right, header-left" style="mardin-bootom:30px"
+                     styleClass="ui-panelgrid-blank">
+            <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                width="auto" height="50"/>
+            </p:link>
+        </p:panelGrid>
+        <p:panel header="Email Bestätigung erforderlich" style=" margin:auto; margin-top: 40px; width: 800px">
+            <h:panelGrid columns="1" cellpadding="10" style="margin: auto">
+                <p:graphicImage id="headergrafik" url="../images/rbz_asp_logo_2018.png"
+                                alt="rbzlogo" title="RBZ_am_Schuetzenpark_Logo"
+                                width="Auto" height="Auto"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" style="margin: auto; margin-top: 20px; text-align:center">
+                <p:graphicImage id="Grafik" url="../images/icons8_exclamation_mark_96px.png"
+                                alt="exclamation_mark" title="exclamoatin_mark"
+                                width="Auto" height="Auto"/>
+                <h:outputText value="#{RegistrationView.messageForEmailReminder}" escape="false"
+                              style="font-size: larger; margin: 20px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" width="100%" style="margin-top: 40px">
+                <p:button outcome="/index" value="zum Portal"/>
+            </h:panelGrid>
+        </p:panel>
+    </div>
+
+</h:body>
+</html>

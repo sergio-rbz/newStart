@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>RBZ am Schützenpark</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+    <f:metadata>
+        <f:viewParam name="uidNumber" value="#{RegistrationView.uidNumber}"/>
+        <f:viewAction id="activate" action="#{RegistrationView.SetUserActiveMail}"/>
+    </f:metadata>
+</h:head>
+<h:body class="body">
+    <div class="ui-fluid">
+        <div class="fullscreen">
+            <p:panelGrid columns="1" layout="grid" columnClasses="header-right, header-left" style="mardin-bootom:30px"
+                         styleClass="ui-panelgrid-blank">
+                <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                    <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                    alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                    width="auto" height="50"/>
+                </p:link>
+            </p:panelGrid>
+            <p:panel header="Email bestätigt." class="dialog">
+                <h:panelGrid columns="1" cellpadding="10" style="margin: auto">
+                    <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                                    alt="rbzlogo" title="RBZ_am_Schuetzenpark_Logo"
+                                    width="Auto" height="Auto"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2" style="margin:auto">
+                    <h:graphicImage url="#{RegistrationView.messageIconPath}" width="Auto" height="Auto"/>
+                    <h:outputText value="#{RegistrationView.messageForEmailcheck}" escape="false"/>
+                </h:panelGrid>
+                <h:panelGrid columns="1" class="navibuttonrow" style="margin-top: 40px">
+                    <p:button outcome="/index" value="zum Portal"/>
+                </h:panelGrid>
+            </p:panel>
+        </div>
+    </div>
+</h:body>
+</html>

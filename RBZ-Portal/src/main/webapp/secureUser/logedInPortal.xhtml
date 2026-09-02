@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Portal - RBZ am Schuetzenpark</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .ui-datagrid-no-border .ui-datagrid-content {
+            border: none !important;
+            background: none !important;
+
+
+        }
+
+        .ui-datagrid-element .ui-datagrid-contend {
+            background: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+    </style>
+</h:head>
+<h:body class="body">
+    <div class="fullscreen">
+        <h:form id="master">
+            <div class="ui-fluid">
+                <p:messages id="info" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+
+                <p:panelGrid columns="3" layout="grid" columnClasses="header-right, header-center, header-left"
+                             style="margin-bottom:30px" styleClass="ui-panelgrid-blank" rendered="true">
+                    <p:row style="justify-content: right">
+                        <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                            <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                            alt="RBZ-Logo" title="Hier geht es zur Webseite des RBZ am Schützenpark"
+                                            width="auto" height="50"/>
+                        </p:link>
+                        <p:outputLabel value="Hallo #{Portal.LoggedInUser().userFullname}"/>
+                        <p:outputLabel value=" (#{Portal.loggedInUserRole})" style="color: gray"/>
+                    </p:row>
+                    <p:row>
+                        <p:menubar>
+                            <p:menuitem value="HILFE" url="#{Portal.helpLinkTeacher}"
+                                        icon="pi pi-question" target="_blank"
+                                        rendered="#{Portal.loginUserIsInAdminsRole || Portal.loginUserIsInTeachersRole || Portal.loginUserIsInVerwRole}"/>
+                            <p:menuitem value="HILFE" url="#{Portal.helpLinkStudents}"
+                                        icon="pi pi-question" target="_blank"
+                                        rendered="#{Portal.loginUserIsInStudentsRole}"/>
+                            <p:submenu label="DOWNLOAD" icon="pi pi-download" rendered="true">
+                                <p:menuitem value="Nextcloud" url="https://nextcloud.com/de/install/" target="_blank"
+                                            rendered="true"/>
+                                <p:menuitem value="Only Office"
+                                            url="https://www.onlyoffice.com/de/download-desktop.aspx" target="_blank"
+                                            rendered="true"/>
+                                <p:menuitem value="Benutzerordnung" icon="pi pi-download" ajax="false"
+                                            title="Download der Benutzerordnung" url="../downloads/Benutzerordnung.pdf"
+                                            target="_blank">
+                                </p:menuitem>
+                            </p:submenu>
+                            <p:menuitem value="SUPPORT" url="https://ticket.rbz-sp.de" icon="pi pi-question"
+                                        target="_blank"
+                                        rendered="#{Portal.loginUserIsInAdminsRole || Portal.loginUserIsInTeachersRole || Portal.loginUserIsInVerwRole}"/>
+                            <p:menuitem value="Changelog" onclick="PF('dlg1').show();"
+                                        rendered="#{Portal.loginUserIsInAdminsRole || Portal.loginUserIsInTeachersRole || Portal.loginUserIsInVerwRole}"/>
+                        </p:menubar>
+                        <p:dialog header="Changelog Portal" widgetVar="dlg1" modal="true" minHeight="40">
+                            <h:form>
+                                <p:outputPanel deferred="true" style="text-align: left">
+                                    <h2>Changelog ( Aktuelle Änderungen in der Portalsoftware )</h2>
+                                    <h3>Aktuelle Portal Version 2.3.7 (...)</h3>
+                                    <p>* Filtern nach iPad Ausleihstatus möglich</p>
+                                    <p>* Der Lehrer-Antrag für ein iPad kann zurückgenommen werden.</p>
+                                    <p>* Wird ein Austrittsdatum gesetzt wird überprüft, ob der Schüler noch im Besitz eines iPads ist.</p>
+                                    <h3>Aktuelle Portal Version 2.3.2 (...)</h3>
+                                    <p>* Apassung an Ipadverleih</p>
+                                    <p>* neue Ipadschaltfläche zum Beantragen von Ipads</p>
+                                    <p>* Statusmeldungen Ipadstatus für SuS </p>
+                                    <h3>Portal Version 2.3.1 (14.11.2022)</h3>
+                                    <p>* Austrittsdatum kann gelöscht werden. Im Export für Untis erscheint Austrittsdatum: 1.1.2030. (Untis kann keine leeren Felder
+                                        importieren)</p>
+                                    <p>* Im Austrittsdatum wird 'n.a.' nicht mehr angezeigt. Stattdessen bleibt das Feld leer.</p>
+                                    <p>* Hilfe Link hat neue Verweise. Unterschiedlich bei Lehrer und SuS.</p>
+                                    <p>* Diverse Anpassungen und Fehlerkorrekturen im Attestbereich.</p>
+                                </p:outputPanel>
+                            </h:form>
+                        </p:dialog>
+
+                    </p:row>
+                    <p:row>
+                        <div>
+                            <p:commandButton value="LOGOUT" icon="pi pi-sign-out" actionListener="#{Portal.Logout}"
+                                             style="width:150px" rendered="true"/>
+                        </div>
+                        <div align="right">
+                            <p:link value="Passwort ändern"
+                                    href="dlg_OwnPasswordReset.xhtml"
+                                    style="width: 200px"/>
+                        </div>
+                    </p:row>
+                </p:panelGrid>
+
+                <h:panelGrid columns="1" rendered="true"
+                             style="width:100%; font-size: smaller; text-align:right; color: white;font-family: sans-serif">
+                    <h:outputText value="Fotografie: Bernd Perlbach sowie AX5 Architekten"/>
+                </h:panelGrid>
+
+                <!--panelGrid für Systemmeldungen-->
+                <h:panelGrid columns="1" rendered="#{SystemMessage.display=='true'}"
+                             style=" background-color: red; margin-top:20px; width:100%; text-align:center; font-size:x-large; color: white;font-family: sans-serif">
+                    <h:outputText value="#{SystemMessage.message}"/>
+                </h:panelGrid>
+
+                <!--panelGrid für IPAD Meldungen-->
+                <h:panelGrid columns="1" rendered="#{Portal.LoggedInUser().rentStatus == 'requestedByStudent'}"
+                             style=" background-color: lightgreen; margin-top:20px; width:100%; text-align:center; font-size:x-large; color: black;font-family: sans-serif">
+                    <h:outputText value="Sie haben den Onlineantrag auf ein Schulipad erfolgreich abgegeben."/>
+                    <h:outputText
+                            value="Wenn ihrem Antrag zugestimmt wurde, bekommen sie eine Bestätigung an ihre Emailadresse und hier im Portal."/>
+                </h:panelGrid>
+                <h:panelGrid columns="1" rendered="#{Portal.LoggedInUser().rentStatus == 'requestedByTeacher'}"
+                             style=" background-color: lightgreen; margin-top:10px; width:100%; text-align:center; font-size:x-large; color: black;font-family: sans-serif">
+                    <h:outputText
+                            value="Ihre Lehrkraft hat ein Ipad für sie vorgesehen. Bitte füllen sie dafür online einen Antrag aus:"/>
+                    <p:linkButton target="_blank" value="Zum Online Antrag für ein Schul-Ipad"
+                                  href="#{Portal.GetRequestLink()}" style="width: fit-content; margin-bottom: 20px">
+
+                    </p:linkButton>
+
+                </h:panelGrid>
+                <h:panelGrid columns="1" rendered="#{Portal.LoggedInUser().rentStatus == 'approved'}"
+                             style=" background-color: lightgreen; margin-top:20px; width:100%; text-align:center; font-size:x-large; color: black;font-family: sans-serif">
+                    <h:outputText value="Ihrem Antrag auf ein Ipad ist zugestimmt worden."/>
+                    <h:outputText value="Bitte holen sie das Gerät am RBZ am Schützenpark im Raum B115 in der EDV ab."/>
+                </h:panelGrid>
+                <h:panelGrid columns="1" rendered="#{Portal.LoggedInUser().rentStatus == '!approved'}"
+                             style=" background-color: lightgreen; margin-top:20px; width:100%; text-align:center; font-size:x-large; color: black;font-family: sans-serif">
+                    <h:outputText value="Ihrem Antrag auf ein Ipad ist NICHT zugestimmt worden."/>
+                    <h:outputText value="Bitte wenden sie sich an ihren Klassenlehrer."/>
+                </h:panelGrid>
+
+
+                <p:dataGrid var="link" value="#{Portal.loggedInWebLinks}" emptyMessage='#{Portal.linkError}' columns="6"
+                            layout="grid" styleClass="ui-datagrid-no-border"
+                            style="margin-top:20px">
+
+                    <p:panel id="panel" header="#{link.name}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:link href="#{link.url}" target="_blank">
+                                <p:graphicImage url="../images/#{link.image}"
+                                                width="20%" height="20%"/>
+                            </p:link>
+                            <h:outputText value="#{link.desc}"/>
+                        </h:panelGrid>
+                        <p:tooltip id="tooltip" for="panel" value="#{link.tooltip}" position="top"/>
+                    </p:panel>
+                </p:dataGrid>
+            </div>
+            <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+                                    update="exceptionDialog"
+                                    onexception="PF('exceptionDialog').show();"/>
+        </h:form>
+    </div>
+
+    <!-- Todo Irgendwann überflüssig (2022)?-->
+    <!--    Todo Rolle in Schueler ändern-->
+    <!--    Dialog zur Innitialen Anzeige der Ergänzungsmaske-->
+    <p:dialog id="dlg_ChangeData" closable="false" responsive="true"
+              rendered="#{Portal.loginUserIsInStudentsRole and Portal.hasToChange}"
+              visible="true" modal="true">
+        <h:form>
+            <h:panelGrid columns="1"
+                         style=" background-color: lawngreen;  margin: auto; margin-top:40px; margin-bottom:40px; width:100%; text-align:center;">
+                <h:outputText value="Erforderlich zur weiteren Nutzung des Portals:"/>
+                <h:outputText value="Bitte geben sie ihren Geburtstag und ihr Geschlecht in die Felder unten ein."/>
+                <h:outputText value="Den Geburtstag in der Form tt.MM.JJJJ wie zum Beispiel 23.04.1998 eingeben."/>
+                <h:outputText value="Die benötigten Punkte werden automatisch ergänzt."/>
+            </h:panelGrid>
+            <p:panelGrid columns="3" style="margin: auto">
+                <p:outputLabel value="Geburtstag: "/>
+                <p:inputMask id="birthday" value="#{Portal.birthday}" mask="99.99.9999" class="textfeldReg"
+                             required="true"
+                             requiredMessage="Bitte Geburtsdatum eingeben" validator="#{ValidateView.birthdayValidate}"
+                             title="Ihr Geburtsdatum als tt.mm.jjjj"/>
+                <p:message for="birthday"/>
+
+                <p:outputLabel value="Geschlecht: "/>
+                <p:selectOneMenu id="gender" value="#{Portal.gender}" class="textfeldReg"
+                                 required="true" requiredMessage="Bitte Geschlecht auswählen" title="Ihr Geschlecht?">
+                    <f:selectItem itemLabel="bitte wählen" itemValue=""/>
+                    <f:selectItem itemLabel="weiblich" itemValue="weiblich"/>
+                    <f:selectItem itemLabel="männlich" itemValue="männlich"/>
+                    <f:selectItem itemLabel="divers" itemValue="divers"/>
+                </p:selectOneMenu>
+                <p:message for="gender"/>
+            </p:panelGrid>
+            <h:panelGrid columns="2" class="navibuttonrow">
+                <p:commandButton id="save" action="#{Portal.CompleteUserData}" value="Eintragen" resetValues="true"
+                                 ajax="false" class="navibutton"/>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+    <p:dialog id="exceptionDialog" header="Session abgelaufen!" widgetVar="exceptionDialog"
+              height="150px">
+        Es hat längere Zeit keine Aktion stattgefunden.<br/> Seite bitte neu laden.<br/><br/>
+
+        <p:button onclick="document.location.href = document.location.href;"
+                  value="Seite neu laden"
+                  rendered="#{pfExceptionHandler.type == 'javax.faces.application.ViewExpiredException'}"/>
+    </p:dialog>
+</h:body>
+</html>

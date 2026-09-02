@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/Error/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/Error/viewExpired.xhtml</location>
+    </error-page>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>nova-light</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+
+<!-- #semar -->
+<!--    <security-constraint>-->
+<!--        <display-name>AdminsConstraint</display-name>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Admins</web-resource-name>-->
+<!--            <url-pattern>/secureUser/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <role-name>AdminsRole</role-name>-->
+<!--        </auth-constraint>-->
+<!--        <user-data-constraint>-->
+<!--            <transport-guarantee>NONE</transport-guarantee>-->
+<!--        </user-data-constraint>-->
+<!--    </security-constraint>-->
+<!--    <security-constraint>-->
+<!--        <display-name>StudentsConstraint</display-name>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Students</web-resource-name>-->
+<!--            <url-pattern>/secureUser/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <role-name>StudentsRole</role-name>-->
+<!--        </auth-constraint>-->
+<!--        <user-data-constraint>-->
+<!--            <transport-guarantee>NONE</transport-guarantee>-->
+<!--        </user-data-constraint>-->
+<!--    </security-constraint>-->
+<!--    <security-constraint>-->
+<!--        <display-name>OfficeConstraint</display-name>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Office</web-resource-name>-->
+<!--            <url-pattern>/secureUser/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <role-name>OfficeRole</role-name>-->
+<!--        </auth-constraint>-->
+<!--        <user-data-constraint>-->
+<!--            <transport-guarantee>NONE</transport-guarantee>-->
+<!--        </user-data-constraint>-->
+<!--    </security-constraint>-->
+<!--    <security-constraint>-->
+<!--        <display-name>TeachersConstraint</display-name>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Teachers</web-resource-name>-->
+<!--            <url-pattern>/secureUser/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <role-name>TeachersRole</role-name>-->
+<!--        </auth-constraint>-->
+<!--        <user-data-constraint>-->
+<!--            <transport-guarantee>NONE</transport-guarantee>-->
+<!--        </user-data-constraint>-->
+<!--    </security-constraint>-->
+
+<!--    <security-constraint>-->
+<!--        <display-name>GuestsConstraint</display-name>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Guests</web-resource-name>-->
+<!--            <url-pattern>/secureUser/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <description/>-->
+<!--            <role-name>GuestsRole</role-name>-->
+<!--        </auth-constraint>-->
+<!--        <user-data-constraint>-->
+<!--            <transport-guarantee>NONE</transport-guarantee>-->
+<!--        </user-data-constraint>-->
+<!--    </security-constraint>-->
+
+<!--    <login-config>-->
+<!--        <auth-method>OIDC</auth-method>-->
+<!--    </login-config>-->
+
+    <security-role>
+        <description>Users added to this role have access to the secureUser directory of the server.</description>
+        <role-name>AdminsRole</role-name>
+    </security-role>
+
+    <security-role>
+        <description>Users added to this role have access to the secureUser directory of the server.</description>
+        <role-name>StudentsRole</role-name>
+    </security-role>
+
+    <security-role>
+        <description/>
+        <description>Users added to this role have access to the secureUser directory of the server.</description>
+        <role-name>TeachersRole</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <description>Users added to this role have access to the secureUser directory of the server.</description>
+        <role-name>OfficeRole</role-name>
+    </security-role>
+    <security-role>
+        <description>Users added to this role have access to the secureUser directory of the server.</description>
+        <role-name>GuestsRole</role-name>
+    </security-role>
+</web-app>

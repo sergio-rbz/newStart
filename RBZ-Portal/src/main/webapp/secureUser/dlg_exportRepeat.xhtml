@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Klassen Export wiederholen</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<body>
+<p:panel header="Eintrittsdatum festlegen" class="dialog">
+    <p:messages id="msgs" closable="true" globalOnly="false">
+        <p:autoUpdate/>
+    </p:messages>
+    <h:form id="form">
+        <h:panelGrid columns="1" class="dialoglogo">
+            <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                            alt="RBZ-LOGO" title="RBZ_am_Schuetzenpark_Logo"
+                            width="auto" height="100"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3" class="dialogfloat">
+            <p:outputLabel for="classtoSet" value="Klasse:"/>
+            <p:selectOneMenu id="classtoSet" value="#{ClassAdminView.className}" style="width:100%">
+                <f:selectItems value="#{ClassAdminView.classes}" var="c" itemLabel="#{className}"
+                               itemValue="#{className}"/>
+            </p:selectOneMenu>
+            <p:message for="classtoSet"/>
+        </h:panelGrid>
+        <h:panelGrid columns="2" class="navibuttonrow">
+            <p:button outcome="classAdmin.xhtml" value="zurück" class="navibutton" title="Zurück zur Adminseite"/>
+            <p:commandButton id="btnExportRepeat" value="Export-Neu"
+                             action="#{ClassAdminView.BulkEportRepeat()}" resetValues="true" title="Export Widerholen"
+                             update="form" class="navibutton"/>
+        </h:panelGrid>
+    </h:form>
+</p:panel>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>RBZ am Schützenpark</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<h:body class="body">
+    <div class="ui-fluid">
+        <div class="fullscreen">
+            <p:panelGrid columns="1" layout="grid" columnClasses="header-right, header-left" style="mardin-bootom:30px"
+                         styleClass="ui-panelgrid-blank">
+                <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                    <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                    alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                    width="auto" height="50"/>
+                </p:link>
+            </p:panelGrid>
+            <h:form id="reset">
+                <p:panel header="Passwort&auml;nderung" class="dialogReg">
+                    <h:panelGrid columns="1" cellpadding="10" style="margin: auto">
+                        <p:graphicImage id="Grafik" url="../images/rbz_asp_logo_2018.png"
+                                        alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                        width="Auto" height="Auto"/>
+                    </h:panelGrid>
+                    <h:panelGrid class="panel">
+                        <p:outputLabel value="Passwortänderung erst möglich nach Aktivierung durch eine Lehrkraft!"
+                                       style="color: red"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" class="panel">
+                        <p:outputLabel for="user" value="Benutzername: "/>
+                        <p:inputText id="user" value="#{PasswordReset.userLogin}"
+                                     required="true" requiredMessage="Bitte Benutznamen eingeben"
+                                     validator="#{ValidateView.UidExistsActivatedPwnChangeAllowd}"
+                                     class="textfeldReg"/>
+                        <p:message for="user"/>
+
+                        <p:outputLabel value="Neues Passwort: "/>
+                        <p:password id="pwd1" value="#{PasswordReset.password1}"
+                                    required="true" requiredMessage="Bitte Passwort eingeben" class="textfeldReg">
+                            <f:event type="postValidate" listener="#{ValidateView.postValidatePassword}"/>
+                        </p:password>
+                        <p:message for="pwd1"/>
+
+                        <p:outputLabel value="Passwort wiederholen: "/>
+                        <p:password id="pwd2" value="#{PasswordReset.password2}"
+                                    required="true" requiredMessage="Bitte Passwort wiederholen." class="textfeldReg"
+                                    validator="#{ValidateView.passwordValidate}"/>
+                        <p:message for="pwd2"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" class="navibuttonrow">
+                        <p:button outcome="/index.xhtml" value="Abbrechen" class="navibutton"/>
+                        <p:commandButton action="#{PasswordReset.ResetPassword()}" class="navibutton" ajax="false"
+                                         value="Passwort ändern"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>
+

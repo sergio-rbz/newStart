@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Benutzer - RBZ am Schützenpark</title>
+
+    <h:outputStylesheet library="css" name="portal.css" />
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+    <style type="text/css">
+        /* =========================================================================
+           1. column configuration
+           ========================================================================= */
+        .custom-scrollbar-table .ui-datatable-tablewrapper table th,
+        .custom-scrollbar-table .ui-datatable-tablewrapper table td {
+            min-width: 170px !important;    /* Mantiene la larghezza minima corretta */
+            white-space: nowrap !important; /* Impedisce il testo a capo disordinato */
+            padding: 10px 12px !important;
+        }
+
+        /* setting the global container */
+        .custom-scrollbar-table.ui-datatable-tablewrapper,
+        .custom-scrollbar-table .ui-datatable-tablewrapper,
+        div.ui-datatable-tablewrapper {
+            overflow-x: scroll !important;
+            overflow-y: hidden !important;
+            padding-bottom: 25px !important; /* make place for the scrollbar */
+        }
+
+        /* =========================================================================
+           2. force Firefox to color any scrollbar inside the table
+           ========================================================================= */
+
+        .custom-scrollbar-table,
+        .custom-scrollbar-table * {
+            scrollbar-color: #ef4444 #f3f4f6 !important; /* Cursore ROSSO, sfondo GRIGIO */
+            scrollbar-width: auto !important;             /* Spessore massimo consentito da Mozilla */
+        }
+
+        /* =========================================================================
+           3. configuration for chrome and other browsers
+           ========================================================================= */
+        div.ui-datatable-tablewrapper::-webkit-scrollbar {
+            height: 20px !important;
+            width: 20px !important;
+            display: block !important;
+        }
+
+        div.ui-datatable-tablewrapper::-webkit-scrollbar-thumb {
+            background-color: #ef4444 !important;
+            border-radius: 10px !important;
+            border: 3px solid white !important;
+        }
+
+        div.ui-datatable-tablewrapper::-webkit-scrollbar-track {
+            background-color: #f3f4f6 !important;
+        }
+    </style>
+
+
+
+
+
+</h:head>
+<h:body>
+    <script type="text/javascript">
+        //<![CDATA[
+        function start() {
+            PF('statusDialog').show();
+        }
+
+        function stop() {
+            PF('statusDialog').hide();
+        }
+
+        //]]>
+    </script>
+
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p:link href="https://rbz-schuetzenpark.de" target="_blank">
+                <p:graphicImage id="rbzlogo" url="../images/rbz_asp_logo_2018.png"
+                                alt="RBZ-Logo" title="RBZ_am_Schuetzenpark_Logo"
+                                width="auto" height="50"/>
+            </p:link>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4" align="center">
+            <p:outputLabel value="Benutzerverwaltung" class="Header"/>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4" align="right">
+            <p:outputLabel value="Hallo #{Portal.LoggedInUser().userFullname}" style="margin-right: 40px"/>
+        </div>
+    </div>
+    <p:separator/>
+    <p:panel id="MainPanel" class="panel"
+             rendered="#{Portal.loginUserIsInAdminsRole||Portal.loginUserIsInTeachersRole || Portal.loginUserIsInVerwRole }">
+
+        <h:form id="form">
+            <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" responsive="true"
+                      closable="false" resizable="false">
+                <p:graphicImage name="../downloads/loading-bar.gif"/>
+            </p:dialog>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes"/>
+            </p:confirmDialog>
+            <p:growl id="msgs" sticky="false" showDetail="true"/>
+            <p:panelGrid columns="3" styleClass="ui-noborder" style="margin-bottom:20px">
+                <p:commandButton id="menubutton" value="Administration" type="button"/>
+                <p:tieredMenu overlay="true" trigger="menubutton" my="left top" at="left bottom" style="width:200px">
+                    <p:menuitem value="Neuer Benutzer" url="dlg_adminAddNewUser.xhtml"
+                                rendered="#{Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Benutzer Passwort" url="dlg_adminNewPassword.xhtml" rendered="false"/>
+                    <p:menuitem value="Neue Klasse" url="dlg_adminAddNewClass.xhtml"
+                                rendered="#{Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Neue Schlüssel" url="dlg_adminAddNewKey.xhtml"
+                                rendered="#{Portal.loginUserIsInTeachersRole ||Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Klasse Löschen" url="dlg_adminDeleteClass.xhtml"
+                                rendered="#{Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Klassen Import" url="dlg_adminImportClass.xhtml"
+                                rendered="#{Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="CSV Klassen Import" url="dlg_csvImportClass.xhtml" rendered="false"/>
+                    <p:menuitem value="Erneut exportieren" url="dlg_exportRepeat.xhtml" rendered="true"/>
+                    <p:menuitem value="Klassen Eintrittsdatum" url="dlg_SetMassEntryDate.xhtml"
+                                rendered="#{Portal.loginUserIsInTeachersRole || Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Klassen Austrittsdatum" url="dlg_SetMassLeavingDate.xhtml"
+                                rendered="#{Portal.loginUserIsInTeachersRole || Portal.loginUserIsInAdminsRole}"/>
+                    <p:menuitem value="Untis CSV Differenz Export" icon="pi pi-download" ajax="false"
+                                title="Download der Änderungen in ein *.CSV"
+                                onclick="PrimeFaces.monitorDownload(start, stop);"
+                                rendered="#{Portal.loginUserIsInAdminsRole}">
+                        <p:fileDownload value="#{UntisDiffCsvDownload.file}"/>
+                    </p:menuitem>
+                    <p:menuitem value="Portal Logbuch" url="logbook.xhtml"
+                                rendered="#{Portal.loginUserIsInAdminsRole}"/>
+                </p:tieredMenu>
+                <a href="https://ticket.rbz-sp.de" target="_blank">SUPPORT</a>
+
+                <!--
+                semar inserted a send mail test button
+                -->
+                <h:commandButton value="Send mail" action="#{ClassAdminView.semarSendmail}" />
+
+
+            </p:panelGrid> <!-- ######### semar -->
+
+
+            <p:dataTable id="dtuserList" widgetVar="userList" value="#{dtLazyView.lazyModel}" var="user"
+                         filteredValue="#{ClassAdminView.filteredUsers}" sortBy="#{user.userName}"
+                         resizableColumns="true"
+                         scrollable="false"
+                         scrollWidth="100%"
+                         liveResize="true"
+                         emptyMessage="keine Benutzer gefunden mit dieser Suche."
+                         paginator="true" rows="50"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15,30,50,100,200,500"
+                         editable="true" editMode="cell" cellEditMode="lazy" lazy="true" multiViewState="true"
+                         styleClass="custom-scrollbar-table">
+
+                <p:ajax event="cellEdit" listener="#{ClassAdminView.onCellEdit}" update=":form:msgs, form:dtuserList"/>
+                <p:ajax event="sort" skipChildren="false"/>
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:commandLink>
+                            <p:graphicImage url="/images/xlsx.png" width="24"/>
+                            <p:dataExporter type="xls" target="dtuserList" fileName="Benutzerliste" encoding="CP1252"/>
+                        </h:commandLink>
+
+                        <!--                        <h:commandLink>-->
+                        <!--                            <p:graphicImage url="../images/pdf.png" width="24"/>-->
+                        <!--                            <p:dataExporter type="pdf" target="dtuserList" fileName="Benutzerliste" encoding="CP1252"/>-->
+                        <!--                        </h:commandLink>-->
+
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Uid" filterBy="#{user.userUidNumber}" width="100" filterMatchMode="contains"
+                          rendered="#{Portal.loginUserIsInAdminsRole}">
+                    <h:outputText value="#{user.userUidNumber}"/>
+                </p:column>
+
+                <p:column headerText="Benutzername" filterBy="#{user.userLogin}" width="" filterMatchMode="contains">
+                    <h:outputText value="#{user.userLogin}"/>
+                </p:column>
+
+                <p:column headerText="Nachname" filterBy="#{user.userName}" filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.userName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{user.userName}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Vorname" filterBy="#{user.givenName}" filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.givenName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{user.givenName}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Email" filterBy="#{user.userEmail}" filterMatchMode="exact">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.userEmail}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="emailInput" value="#{user.userEmail}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Klasse" filterBy="#{user.userClass}" width="100" filterMatchMode="contains">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{user.userClass}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu value="#{user.userClass}" style="width:100%">
+                                <f:selectItems value="#{ClassAdminView.classes}" var="newClass" itemLabel="#{newClass}"
+                                               itemValue="#{newClass}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Geschlecht" rendered="true" filterBy="#{user.gender}" width="100"
+                          filterMatchMode="exact">
+                    <p:cellEditor rendered="#{user.userClass != 'LEHRER' || Portal.loginUserIsInAdminsRole}">
+                        <f:facet name="output">
+                            <h:outputText value="#{user.gender}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{user.gender}" style="width:100%">
+                                <f:selectItem itemLabel="bitte wählen" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="weiblich" itemValue="weiblich"/>
+                                <f:selectItem itemLabel="männlich" itemValue="männlich"/>
+                                <f:selectItem itemLabel="divers" itemValue="divers"/>
+                                <f:selectItem itemLabel="n.a" itemValue="n.a"/>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Geburtstag" rendered="true" filterBy="#{user.birthday}" width="100"
+                          filterMatchMode="exact">
+                    <p:cellEditor rendered="#{user.userClass != 'LEHRER' || Portal.loginUserIsInAdminsRole}">
+                        <f:facet name="output">
+                            <h:outputText value="#{user.birthday}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputMask id="birthday" value="#{user.birthday}" style="width:100%" mask="99.99.9999"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Eintrittsdatum" filterBy="#{user.entryDate}" width="100"
+                          filterMatchMode="contains">
+                    <p:cellEditor rendered="#{user.userClass != 'LEHRER' || Portal.loginUserIsInAdminsRole}">
+                        <f:facet name="output">
+                            <h:outputText value="#{user.entryDate}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputMask id="entryInput" value="#{user.entryDate}" style="width:100%"
+                                         mask="99.99.9999" up="pf:form:dtDataTable"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Austrittsdatum" filterBy="#{user.leavingDate}" width="100"
+                          filterMatchMode="contains">
+                    <p:cellEditor rendered="#{user.userClass != 'LEHRER' || Portal.loginUserIsInAdminsRole}">
+                        <f:facet name="output">
+                            <h:outputText value="#{user.leavingDate}" rendered="#{user.leavingDate != 'n.a'}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputMask id="endingInput" value="#{user.leavingDate}" style="width:100%"
+                                         mask="99.99.9999">
+                            </p:inputMask>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="AT" exportable="false" width="80" style="text-align: center"
+                          rendered="#{Portal.loginUserIsInVerwRole || Portal.loginUserIsInAdminsRole}">
+                    <p:linkButton id="atButton" outcome="dlg_UserAttest" icon="pi pi-plus-circle" title="Attest"
+                                  rendered="#{user.attest == 'no'}">
+                        <f:param name="uidNumber" value="#{user.userUidNumber}"/>
+                        <f:param name="givenName" value="#{user.givenName}"/>
+                        <f:param name="userName" value="#{user.userName}"/>
+                    </p:linkButton>
+                    <p:linkButton id="yesatButton" outcome="dlg_UserAttest" icon="pi pi-check-circle" title="Attest"
+                                  rendered="#{user.attest == 'yes'}">
+                        <f:param name="uidNumber" value="#{user.userUidNumber}"/>
+                        <f:param name="givenName" value="#{user.givenName}"/>
+                        <f:param name="userName" value="#{user.userName}"/>
+                    </p:linkButton>
+                    <p:tooltip for="atButton" position="left" value="Attestpflicht"/>
+                    <p:tooltip for="yesatButton" position="left" value="Attestpflicht"/>
+                    <p:commandButton id="atinfo" type="button" icon="pi pi-search"
+                                     rendered="#{user.attest == 'yes' || user.attestComment != 'n.a'}"/>
+                    <p:overlayPanel for="atinfo" style="width:350px" dismissable="true">
+                        <h:outputText value="#{user.attestDate}, "/>
+                        <h:outputText value="#{user.attestComment}"/>
+                    </p:overlayPanel>
+                    <p:tooltip for="atinfo" position="right" value="Info Attestpflicht"/>
+                </p:column>
+
+                <p:column headerText="Aktiv" exportable="false" filterBy="#{user.inetActive}" filterMatchMode="exact"
+                          width="80" style="text-align: center">
+                    <p:cellEditor rendered="#{user.userProfil != 'KEY'}">
+                        <f:facet name="output">
+                            <p:graphicImage url="../images/gruen.png"
+                                            alt="gruen" rendered="#{user.inetActive == 'yes'}"/>
+                            <p:graphicImage url="../images/rot.png"
+                                            alt="gruen" rendered="#{user.inetActive == 'no'}"/>
+                            <p:graphicImage url="../images/blau.png"
+                                            alt="gruen" rendered="#{user.inetActive == 'mail'}"/>
+                        </f:facet>
+                        <f:facet name="input"
+                                 rendered="#{user.userProfil != 'KEY'}">
+                            <h:selectOneMenu id="aktiv" value="#{user.inetActive}" style="width:100%"
+                                             title="Ist der Benutzer im Portal freigeschaltet?">
+                                <f:selectItem itemLabel="JA" itemValue="yes"/>
+                                <f:selectItem itemLabel="NEIN" itemValue="no"/>
+                                <f:selectItem itemLabel="MAIL" itemValue="mail"/>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                    <f:facet name="filter">
+                        <h:selectOneMenu onchange="PF('userList').filter()" styleClass="custom-filter">
+                            <f:selectItem itemLabel="Alles" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Ja" itemValue="yes"/>
+                            <f:selectItem itemLabel="Nein" itemValue="no"/>
+                            <f:selectItem itemLabel="Mail" itemValue="mail"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="Anzeigen" exportable="false" filterBy="#{user.userProfil}" width="100"
+                          style="text-align: center">
+                    <f:facet name="filter">
+                        <h:selectOneMenu onchange="PF('userList').filter()" styleClass="custom-filter">
+                            <f:selectItem itemLabel="Schüler" itemValue="Public"/>
+                            <f:selectItem itemLabel="Lehrer" itemValue="Lehrer"/>
+                            <f:selectItem itemLabel="Schlüssel" itemValue="KEY"/>
+                            <f:selectItem itemLabel="Alles" itemValue="#{null}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{user.userProfil}"/>
+                </p:column>
+
+                <p:column headerText="iPad" exportable="true" filterBy="#{user.rentStatus}" width="80"
+                          style="text-align: center"
+                          rendered="#{Portal.loginUserIsInIpadsViewRole}">
+                    <f:facet name="filter">
+                        <h:selectOneMenu onchange="PF('userList').filter()" styleClass="custom-filter">
+                            <f:selectItem itemLabel="ausgegeben" itemValue="issued"/>
+                            <f:selectItem itemLabel="beantragt(L)" itemValue="requestedByTeacher"/>
+                            <f:selectItem itemLabel="beantragt(S)" itemValue="requestedByStudent"/>
+                            <f:selectItem itemLabel="Alles" itemValue="#{null}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                    <p:linkButton outcome="dlg_AddToJamf" icon="pi pi-plus-circle" title="IPad beantragen" id="ipad"
+                                  rendered="#{user.rentStatus == 'n.a'}">
+                        <f:param name="uidNumber" value="#{user.userUidNumber}"/>
+                        <f:param name="givenName" value="#{user.givenName}"/>
+                        <f:param name="userName" value="#{user.userName}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+                    <p:linkButton outcome="dlg_AddToJamf" icon="pi pi-plus-circle" title="IPAD" id="ipadreturned"
+                                  rendered="#{user.rentStatus == 'returned'}" style="background: aquamarine">
+                        <f:param name="uidNumber" value="#{user.userUidNumber}"/>
+                        <f:param name="givenName" value="#{user.givenName}"/>
+                        <f:param name="userName" value="#{user.userName}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+                    <p:linkButton outcome="dlg_RemoveFromJamf" value=" beantragt(L) "
+                                  style="color: white; background: darkblue;"
+                                  rendered="#{user.rentStatus == 'requestedByTeacher'}"
+                                  title="klicken um Antrag zurück zu nehmen">
+                        <f:param name="uidNumber" value="#{user.userUidNumber}"/>
+                        <f:param name="givenName" value="#{user.givenName}"/>
+                        <f:param name="userName" value="#{user.userName}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+
+                    <p:commandButton value=" beantragt (S) " style="color: black; background: yellow"
+                                     rendered="#{user.rentStatus == 'requestedByStudent'}"
+                                     title="IPad Verleihung ist von SuS oder Lehrkraft beantragt worden"/>
+
+                    <p:commandButton value=" genehmigt " style="color: white; background: green"
+                                     rendered="#{user.rentStatus == 'approved'}"
+                                     title="IPad Verleihung ist genehmigt worden"/>
+
+                    <p:commandButton value=" nicht genehmigt " style="color: white; background: red"
+                                     rendered="#{user.rentStatus == 'not-approved'}"
+                                     title="IPad Verleihung ist nicht genehmigt worden"/>
+
+                    <p:commandButton value=" ausgegeben " style="color: black; background: lightgreen"
+                                     rendered="#{user.rentStatus == 'issued'}" title="IPad ist ausgegeben"/>
+
+                    <p:commandButton value=" defekt " style="color: white; background: darkred"
+                                     rendered="#{user.rentStatus == 'malfunction'}" title="IPad ist defekt"/>
+
+                    <p:commandButton value=" defekt(Zub.f.) " style="color: white; background: darkred"
+                                     rendered="#{user.rentStatus == 'malfunction-incomplete'}"
+                                     title="IPad ist defekt und es fehlt Zubehör"/>
+
+                    <p:commandButton value=" zurück(Zub.f.) " style="color: black; background: orange"
+                                     rendered="#{user.rentStatus == 'incomplete'}"
+                                     title="IPad ist zurück und es fehlt Zubehör"/>
+
+                </p:column>
+                <p:column headerText="Löschen" exportable="false" width="50" style="text-align: center"
+                          rendered="#{Portal.loginUserIsInAdminsRole}">
+                    <p:linkButton id="delete" styleClass="ui-button-danger" icon="pi pi-trash"
+                                  outcome="dlg_adminDeleteUser.xhtml">
+                        <f:param name="userFullNameToDelete" value="#{user.userFullname}"/>
+                        <f:param name="userUidNumberToDelete" value="#{user.userUidNumber}"/>
+                        <f:param name="userNameToDelete" value="#{user.userLogin}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+                    <p:tooltip for="delete" position="right" value="SchülerIn löschen"/>
+                </p:column>
+
+                <p:column headerText="Passwort zurücksetzen" exportable="false" width="100" style="text-align: center"
+                          rendered="#{Portal.loginUserIsInAdminsRole||Portal.loginUserIsInTeachersRole}">
+                    <p:linkButton id="pwnew" outcome="dlg_NewPassword" icon="pi pi-user-edit">
+                        <f:param name="userFullNameToReset" value="#{user.userFullname}"/>
+                        <f:param name="userUidNumberToReset" value="#{user.userUidNumber}"/>
+                        <f:param name="userNameToReset" value="#{user.userLogin}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+                    <p:tooltip for="pwnew" position="right" value="Neues Passwort setzen"/>
+                    <p:linkButton id="pwreset" outcome="dlg_ResetToStandardPassword" icon="pi pi-user-edit"
+                                  style="background: cadetblue">
+                        <f:param name="userFullNameToReset" value="#{user.userFullname}"/>
+                        <f:param name="userUidNumberToReset" value="#{user.userUidNumber}"/>
+                        <f:param name="userNameToReset" value="#{user.userLogin}"/>
+                        <f:param name="userClass" value="#{user.userClass}"/>
+                    </p:linkButton>
+                    <p:tooltip for="pwreset" outcome="dlg_NewPassword" position="right"
+                               value="Passwort auf Standard setzen"/>
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+    </p:panel>
+
+</h:body>
+</html>

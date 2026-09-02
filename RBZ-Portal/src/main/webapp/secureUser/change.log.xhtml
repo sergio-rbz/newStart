@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: andreas
+  Date: 14.11.2022
+  Time: 14:27
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Portal RBZ am Schützenpark Changelog</title>
+    <link href="../css/portal.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:outputPanel deferred="true">
+            <h2>Changelog ( Aktuelle Änderungen in der Portalsoftware )</h2>
+            <h3></h3>
+            <h3>Portal Version 3.0.0 (24.09.2023)</h3>
+            <p>* </p> Migration auf aktuellen Wildfly
+            <p>* </p> Keycloak auf OIDC migriert
+            <h3></h3>
+            <h3>Portal Version 2.3.6 (17.09.2023)</h3>
+            <p>* </p> Korrektur Ipad Antrag Rücknahme ist möglich.
+            <p>* </p> Excelausgabe des IpadStatuses wird in Excel angezeigt.
+            <p>* </p> PDF Export temporär entfernt.
+            <h3></h3>
+            <h3>Portal Version 2.3.3 (28.08.2023)</h3>
+            <p>* Neuer Dialog für Admins: Klassen reExport/Import</p>
+            <p>* Fehlerbehebung im Rechtebereich</p>
+            <h3></h3>
+            <h3>Portal Version 2.3.1 (14.11.2022)</h3>
+            <p>* Austrittsdatum kann gelöscht werden. Im Export für Untis erscheint Austrittsdatum: 1.1.2030. (Untis kann keine leeren Felder
+                importieren)</p>
+            <p>* Im Austrittsdatum wird 'n.a.' nicht mehr angezeigt. Stattdessen bleibt das Feld leer.</p>
+            <p>* Hilfe Link hat neue Verweise. Unterschiedlich bei Lehrer und SuS.</p>
+            <p>* Diverse Anpassungen und Fehlerkorrekturen im Attestbereich.</p>
+        </p:outputPanel>
+    </h:form>
+</h:body>
+
+</html>
