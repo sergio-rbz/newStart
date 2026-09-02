@@ -12,4 +12,6 @@ public class newClass {
     //third comment
     //bla bla bla
 
+    //a comment, again !
+
 }
